@@ -30,12 +30,9 @@ jobs:
         id: configure
         with:
           mode: configure
+          generator: Ninja
           install_prefix: './MyInstallPrefix'
-          configure_warnings: deprecated
-          configure_warnings_as_errors: ''
-          list_cache_variables: 'advanced_help'
-          log_level: 'TRACE'
-          log_context: true
+          source_dir: './tests'
 
       - name: 🛠️ run-cmake (build)
         uses: cmake-tools/run-cmake@v0-alpha
