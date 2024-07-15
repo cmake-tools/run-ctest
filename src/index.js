@@ -3,9 +3,9 @@ const compare_version = require('compare-versions')
 const parser = require('action-input-parser')
 const core = require('@actions/core');
 const which = require('which')
-
-/*const io = require('@actions/io');
 const path = require('path')
+/*const io = require('@actions/io');
+
 const {DefaultArtifactClient} = require('@actions/artifact')
 const github = require('@actions/github');
 

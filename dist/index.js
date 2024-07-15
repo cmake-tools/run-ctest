@@ -28835,9 +28835,9 @@ const compare_version = __nccwpck_require__(7568)
 const parser = __nccwpck_require__(3455)
 const core = __nccwpck_require__(6519);
 const which = __nccwpck_require__(6315)
-
+const path = __nccwpck_require__(1017)
 /*const io = require('@actions/io');
-const path = require('path')
+
 const {DefaultArtifactClient} = require('@actions/artifact')
 const github = require('@actions/github');
 
