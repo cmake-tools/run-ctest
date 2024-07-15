@@ -1,0 +1,11 @@
+name: run-ctest
+description: 'GitHub action to run CTest'
+author: flagarde
+
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
+
+branding:
+  icon: 'settings'
+  color: 'green'
