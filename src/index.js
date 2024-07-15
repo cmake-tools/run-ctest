@@ -1,9 +1,9 @@
 const exec = require('@actions/exec')
 const compare_version = require('compare-versions')
 const parser = require('action-input-parser')
-/*const core = require('@actions/core');
+const core = require('@actions/core');
 
-const which = require('which')
+/*const which = require('which')
 
 const io = require('@actions/io');
 const path = require('path')
