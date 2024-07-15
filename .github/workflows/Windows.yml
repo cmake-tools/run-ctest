@@ -19,26 +19,25 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: ⬇️ Setup CMake
         uses: lukka/get-cmake@latest
         with:
           cmakeVersion: ~3.${{ matrix.cmake_version }}
           ninjaVersion: ^1
+
       - name: Setup MSVC
         uses: ilammy/msvc-dev-cmd@v1
+
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v2
-      - name: CMake --help
-        run: cmake --help
+
       - name: ⚙️ run-cmake (configure)
-        uses: ./
+        uses: cmake-tools/run-cmake@v0-alpha
         id: configure
         with:
           mode: configure
           install_prefix: './MyInstallPrefix'
-          variables: |
-            AFTER_CACHE_BOOL:BOOL=TRUE
-            AFTER_CACHE_STRING:STRING="MyString"
           configure_warnings: warning
           configure_warnings_as_errors: ''
           list_cache_variables: 'advanced_help'
@@ -48,7 +47,7 @@ jobs:
           
 
       - name: 🛠️ run-cmake (build)
-        uses: ./
+        uses: cmake-tools/run-cmake@v0-alpha
         id: build
         with:
           mode: build
@@ -58,9 +57,6 @@ jobs:
             Main
           build_verbose: true
 
-      - name: 📥 run-cmake (install)
+      - name: 🧪 run-ctest
         uses: ./
-        id: install
-        with:
-          mode: install
-          install_verbose: true
+        id: test

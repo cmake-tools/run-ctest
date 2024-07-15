@@ -24,37 +24,28 @@ jobs:
         with:
           cmakeVersion: ~3.${{ matrix.cmake_version }}
           ninjaVersion: ^1
-      - name: CMake --help
-        run: cmake --help
       
       - name: ⚙️ run-cmake (configure)
-        uses: ./
+        uses: cmake-tools/run-cmake@v0-alpha
         id: configure
         with:
           mode: configure
           install_prefix: './MyInstallPrefix'
-          variables: |
-            AFTER_CACHE_BOOL:BOOL=TRUE
-            AFTER_CACHE_STRING:STRING="MyString"
           configure_warnings: deprecated
           configure_warnings_as_errors: ''
           list_cache_variables: 'advanced_help'
-          graphviz: './graph.dot'
           log_level: 'TRACE'
           log_context: true
 
       - name: 🛠️ run-cmake (build)
-        uses: ./
+        uses: cmake-tools/run-cmake@v0-alpha
         id: build
         with:
           mode: build
           clean_first: true
           build_verbose: true
 
-      - name: 📥 run-cmake (install)
+      - name: 🧪 run-ctest
         uses: ./
-        id: install
-        with:
-          mode: install
-          install_verbose: false
+        id: test
         
