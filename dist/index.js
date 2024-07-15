@@ -28912,7 +28912,6 @@ function run_tests(command_line_maker)
     } 
   }
   options.silent = false
-  options.cwd = command_line_maker.workingDirectory()
   exec.exec('ctest',command_line_maker.runtestCommandParameters(), options)
 }
 
