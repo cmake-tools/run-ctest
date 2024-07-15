@@ -2,6 +2,16 @@ name: run-ctest
 description: 'GitHub action to run CTest'
 author: flagarde
 
+inputs:
+  build_config:
+    description: 'Choose configuration to test.'
+    required: false
+    default: ''
+  test_dir:
+    description: 'Specify the directory in which to look for tests, typically a CMake project build directory.'
+    required: false
+    default: ''
+
 runs:
   using: 'node20'
   main: 'dist/index.js'

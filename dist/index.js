@@ -28874,8 +28874,14 @@ class CommandLineMaker
   constructor()
   {
     this.actual_path=path.resolve('./')
+    this.#test_dir()
   }
   
+  workingDirectory()
+  {
+    return this.test_dir
+  }
+
   #test_config()
   {
     let config = ''
@@ -28890,10 +28896,26 @@ class CommandLineMaker
     else return []
   }
 
+  #test_dir()
+  {
+    this.test_dir = ''
+    // Find the test_dir from build first
+    if(process.env.binary_dir) this.test_dir = process.env.binary_dir
+    else this.test_dir = core.getInput('test_dir', { required: false, default: '' })
+    if(this.test_dir!='')
+    {
+      this.test_dir=path.posix.resolve(this.test_dir)
+      if(CTestVersionGreaterEqual('3.20')) return Array('--test-dir',this.test_dir)
+      else return []
+    }
+    else return []
+  }
+
   runtestCommandParameters()
   {
     let parameters=[]
     parameters=parameters.concat(this.#test_config())
+    parameters=parameters.concat(this.#test_dir())
     return parameters;
   }
 }
@@ -28912,6 +28934,7 @@ function run_tests(command_line_maker)
     } 
   }
   options.silent = false
+  options.cwd = command_line_maker.workingDirectory()
   exec.exec('ctest',command_line_maker.runtestCommandParameters(), options)
 }
 
