@@ -43,9 +43,30 @@ class CommandLineMaker
   {
     this.actual_path=path.resolve('./')
   }
+  
+  #test_config()
+  {
+    let config = ''
+    // Find the config from build first
+    if(process.env.config) config = process.env.config
+    else config = core.getInput('config', { required: false, default: '' })
+    if(config!='')
+    {
+      core.exportVariable('config',config)
+      return Array('--build-config',config)
+    }
+    else return []
+  }
+
+  runtestCommandParameters()
+  {
+    let parameters=[]
+    parameters=parameters.concat(this.#test_config())
+    return parameters;
+  }
 }
 
-function configure(command_line_maker)
+function run_tests(command_line_maker)
 {
   let cout ='';
   let cerr='';
@@ -60,7 +81,7 @@ function configure(command_line_maker)
   }
   options.silent = false
   options.cwd = command_line_maker.workingDirectory()
-  exec.exec('cmake',command_line_maker.configureCommandParameters(), options)
+  exec.exec('ctest',command_line_maker.runtestCommandParameters(), options)
 }
 
 async function main()
@@ -71,6 +92,7 @@ async function main()
     if(!found) throw String('not found: CTest')
     global.cmake_version= await getCTestVersion()
     const command_line_maker = new CommandLineMaker()
+    run_tests(command_line_maker)
   }
   catch (error)
   {
